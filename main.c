@@ -10,7 +10,7 @@
 #include <stdio.h>
 #include <GL/glut.h>
 
-int spaceshipX = 200, spaceshipY = 70;
+int spaceshipX = 400, spaceshipY = 300;
 static void on_display(void);
 static void on_keyboard(unsigned char key, int x, int y);
 void draw_space(void);
@@ -21,7 +21,7 @@ int main(int argc, char** argv)
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH);
     
-    glutInitWindowSize(800, 500);
+    glutInitWindowSize(800, 600);
     glutInitWindowPosition((glutGet(GLUT_SCREEN_WIDTH)-800)/2,
                         (glutGet(GLUT_SCREEN_HEIGHT)-500)/2);
     glutCreateWindow("Stargazer");
@@ -37,14 +37,31 @@ int main(int argc, char** argv)
 
 }
 
+static void on_display(void)
+{
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    draw_space();
+    draw_spaceship();
+    // glColor3f(0.5,0.5,0.5);  
+    // glBegin(GL_POLYGON);
+    //     glColor3f(0.6,0.3,0.5);
+    //     glVertex3f (0.40, 0, 0);
+    //     glVertex3f (0.60, 0, 0);
+    //     glVertex3f (0.5, 0.2, 0);
+    // glEnd();
+    
+    glutSwapBuffers();
+
+}
+
 void draw_space(void)
 {
+    glColor3f(0.2,0.2,0.2);
     glBegin(GL_POLYGON);
-        glColor3f(0.5,0.5,0.5);
-        glVertex2f(50,500);
-        glVertex2f(50,0);
-        glVertex2f(450,0);
-        glVertex2f(450,500);
+        glVertex3f(1, -1, 0);
+        glVertex3f(-1, -1, 0);
+        glVertex3f(-1, 1, 0);
+        glVertex3f(1, 1, 0);
     glEnd();
     
 }
@@ -55,71 +72,51 @@ void draw_spaceship(void)
 
     glBegin(GL_POINTS);//front shooter
     glColor3f(1,1,1);//111
-    glVertex2f(spaceshipX, spaceshipY + 40);
+    glVertex2f(spaceshipX/800, (spaceshipY + 40)/600);
     glEnd();
 
     glBegin(GL_QUADS);
         glColor3f(0.137255,0.419608,0.556863);//middle body
-        glVertex2f(spaceshipX - 25, spaceshipY + 25);
-        glVertex2f(spaceshipX - 25, spaceshipY - 25);
-        glVertex2f(spaceshipX + 25, spaceshipY - 25);
-        glVertex2f(spaceshipX + 25, spaceshipY + 25);
+        glVertex2f((spaceshipX - 25)/800, (spaceshipY + 25)/600);
+        glVertex2f((spaceshipX - 25)/800, (spaceshipY - 25)/600);
+        glVertex2f((spaceshipX + 25)/800, (spaceshipY - 25)/600);
+        glVertex2f((spaceshipX + 25)/800, (spaceshipY + 25)/600);
     glEnd();
 
     glBegin(GL_POINTS);//design on middle
         glColor3f(0.90,0.91,0.98);
-        glVertex2f(spaceshipX - 10,spaceshipY - 5);
-        glVertex2f(spaceshipX + 10,spaceshipY - 5);
+        glVertex2f((spaceshipX - 10)/800,(spaceshipY - 5)/600);
+        glVertex2f((spaceshipX + 10)/800,(spaceshipY - 5)/600);
     glEnd();
 
     glBegin(GL_POINTS);//thrusters
         glColor3f(1, 1, 1);
-        glVertex2f(spaceshipX - 10,spaceshipY - 30);
-        glVertex2f(spaceshipX + 10,spaceshipY - 30);
+        glVertex2f((spaceshipX - 10)/800,(spaceshipY - 30)/600);
+        glVertex2f((spaceshipX + 10)/800,(spaceshipY - 30)/600);
     glEnd();
 
     glBegin(GL_TRIANGLES);//right wing
         glColor3f(0.196078, 0.8, 0.196078);
-        glVertex2f(spaceshipX + 25,spaceshipY + 25);
-        glVertex2f(spaceshipX + 25,spaceshipY - 25);
-        glVertex2f(spaceshipX + 45,spaceshipY - 35);
+        glVertex2f((spaceshipX + 25)/800,(spaceshipY + 25)/600);
+        glVertex2f((spaceshipX + 25)/800,(spaceshipY - 25)/600);
+        glVertex2f((spaceshipX + 45)/800,(spaceshipY - 35)/600);
     glEnd();
 
     glBegin(GL_TRIANGLES);//left wing
         glColor3f(0.196078, 0.8, 0.196078);
-        glVertex2f(spaceshipX - 25,spaceshipY + 25);
-        glVertex2f(spaceshipX - 25,spaceshipY - 25);
-        glVertex2f(spaceshipX - 45,spaceshipY - 35);
+        glVertex2f((spaceshipX - 25)/800,(spaceshipY + 25)/600);
+        glVertex2f((spaceshipX - 25)/800,(spaceshipY - 25)/600);
+        glVertex2f((spaceshipX - 45)/800,(spaceshipY - 35)/600);
     glEnd();
 
 
     glBegin(GL_QUADS);//up body
         glColor3f(0.99609, 0.83984, 0);
-        glVertex2f(spaceshipX - 25, spaceshipY + 25);
-        glVertex2f(spaceshipX - 18, spaceshipY + 40);
-        glVertex2f(spaceshipX + 18, spaceshipY + 40);
-        glVertex2f(spaceshipX + 25, spaceshipY + 25);
+        glVertex2f((spaceshipX - 25)/800, (spaceshipY + 25)/600);
+        glVertex2f((spaceshipX - 18)/800, (spaceshipY + 40)/600);
+        glVertex2f((spaceshipX + 18)/800, (spaceshipY + 40)/600);
+        glVertex2f((spaceshipX + 25)/800, (spaceshipY + 25)/600);
     glEnd();
-
-}
-
-static void on_display(void)
-{
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    //draw_space();
-    //draw_spaceship();
-    glColor3f(0.5,0.5,0.5);
-    glOrtho(0.0, 1.0, 0.0, 1.0, -1.0, 1.0);
-    glBegin(GL_POLYGON);
-        glColor3f(0.6,0.3,0.5);
-        glVertex3f (0.40, 0, 0);
-        glVertex3f (0.60, 0, 0);
-        glVertex3f (0.5, 0.2, 0);
-    glEnd();
-    
-    glFlush();
-
-    glutSwapBuffers();
 
 }
 
